@@ -38,5 +38,13 @@
         "installMode": "currentUser"
       }
     }
+  },
+  "plugins": {
+    "fs": {
+      "scope": {
+        "allow": ["**"],
+        "deny": []
+      }
+    }
   }
 }
