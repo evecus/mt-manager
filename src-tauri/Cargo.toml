@@ -1,0 +1,40 @@
+[package]
+name = "mt-manager"
+version = "1.0.0"
+description = "MT管理器 - Windows文件管理器"
+authors = ["MT Manager Team"]
+edition = "2021"
+
+[lib]
+name = "mt_manager_lib"
+crate-type = ["staticlib", "cdylib", "rlib"]
+
+[build-dependencies]
+tauri-build = { version = "2", features = [] }
+
+[dependencies]
+tauri = { version = "2", features = ["dialog", "window-all"] }
+tauri-plugin-opener = "2"
+tauri-plugin-fs = "2"
+tauri-plugin-dialog = "2"
+tauri-plugin-shell = "2"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+walkdir = "2"
+zip = "2"
+tar = "0.4"
+flate2 = "1"
+bzip2 = "0.4"
+xz2 = "0.1"
+chrono = { version = "0.4", features = ["serde"] }
+mime_guess = "2"
+sha2 = "0.10"
+md5 = "0.7"
+hex = "0.4"
+regex = "1"
+glob = "0.3"
+tokio = { version = "1", features = ["full"] }
+dirs-next = "2"
+
+[features]
+custom-protocol = ["tauri/custom-protocol"]
