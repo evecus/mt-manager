@@ -16,9 +16,7 @@
         "width": 1280,
         "height": 800,
         "minWidth": 900,
-        "minHeight": 600,
-        "decorations": true,
-        "transparent": false
+        "minHeight": 600
       }
     ],
     "security": {
@@ -39,18 +37,6 @@
       "nsis": {
         "installMode": "currentUser"
       }
-    }
-  },
-  "plugins": {
-    "shell": {
-      "open": true
-    },
-    "fs": {
-      "all": true,
-      "scope": ["**"]
-    },
-    "dialog": {
-      "all": true
     }
   }
 }

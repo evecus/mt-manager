@@ -5,10 +5,9 @@
   "windows": ["main"],
   "permissions": [
     "core:default",
-    "core:window:allow-start-dragging",
-    "shell:allow-open",
-    "dialog:allow-open",
-    "dialog:allow-save",
+    "opener:default",
+    "dialog:default",
+    "fs:default",
     "fs:allow-read-file",
     "fs:allow-write-file",
     "fs:allow-read-dir",
@@ -18,7 +17,6 @@
     "fs:allow-rename",
     "fs:allow-exists",
     "fs:allow-stat",
-    "opener:allow-open-path",
-    "opener:allow-open-url"
+    "shell:default"
   ]
 }
