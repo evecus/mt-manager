@@ -1,0 +1,93 @@
+name: Build MT管理器
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build-windows:
+    name: Build Windows Installer
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Setup Rust toolchain
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: x86_64-pc-windows-msvc
+
+      - name: Cache Rust dependencies
+        uses: swatinem/rust-cache@v2
+        with:
+          workspaces: './src-tauri -> target'
+
+      - name: Install frontend dependencies
+        run: npm ci
+
+      - name: Build Tauri app
+        uses: tauri-apps/tauri-action@v0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tagName: ${{ github.ref_name }}
+          releaseName: 'MT管理器 ${{ github.ref_name }}'
+          releaseBody: |
+            ## MT管理器 Windows 版本
+
+            ### 安装方式
+            - **推荐**: 下载 `.msi` 或 `.exe` (NSIS) 安装程序
+            - 安装后在开始菜单搜索「MT管理器」启动
+
+            ### 功能
+            - 双窗格文件管理
+            - 内置文本编辑器 (Monaco Editor，支持语法高亮)
+            - HEX 十六进制查看器
+            - 图片查看器
+            - 压缩包查看/解压 (ZIP/TAR/GZ/BZ2/XZ)
+            - 文件搜索（支持正则、内容搜索）
+            - 批量重命名
+            - 文件属性（MD5/SHA256）
+          releaseDraft: false
+          prerelease: false
+
+  build-dev:
+    name: Dev Build Check
+    runs-on: windows-latest
+    if: github.event_name == 'pull_request'
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Setup Rust
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Cache Rust
+        uses: swatinem/rust-cache@v2
+        with:
+          workspaces: './src-tauri -> target'
+
+      - name: Install deps
+        run: npm ci
+
+      - name: Type check
+        run: npx tsc --noEmit
+
+      - name: Build frontend
+        run: npm run build
+
+      - name: Check Rust compilation
+        working-directory: src-tauri
+        run: cargo check
