@@ -1,6 +1,6 @@
-import { useState, useRef } from 'react';
+import { useState } from 'react';
 import { api } from '../utils/api';
-import { formatSize, formatDate, getFileIcon, basename } from '../utils/fileUtils';
+import { formatSize, formatDate, getFileIcon } from '../utils/fileUtils';
 import type { FileEntry } from '../types';
 
 interface SearchPanelProps {
@@ -18,14 +18,12 @@ export function SearchPanel({ initialPath, onOpen, onNavigate }: SearchPanelProp
   const [loading, setLoading] = useState(false);
   const [searched, setSearched] = useState(false);
   const [elapsed, setElapsed] = useState(0);
-  const abortRef = useRef(false);
 
   const doSearch = async () => {
     if (!pattern.trim() && !contentPattern.trim()) return;
     setLoading(true);
     setResults([]);
     setSearched(false);
-    abortRef.current = false;
     const start = Date.now();
     try {
       const res = await api.searchFiles(

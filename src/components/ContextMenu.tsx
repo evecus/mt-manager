@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 import type { PaneState, ClipboardState, FileEntry } from '../types';
-import { isTextFile, isImageFile, isArchiveFile, basename } from '../utils/fileUtils';
+import { isTextFile, isImageFile, isArchiveFile } from '../utils/fileUtils';
 import { api } from '../utils/api';
 
 interface ContextMenuProps {
@@ -16,7 +16,6 @@ interface ContextMenuProps {
   onCut: (files: string[]) => void;
   onPaste: () => void;
   onDelete: (files: string[]) => void;
-  onRename: (src: string, newName: string) => void;
   onNewFile: () => void;
   onProperties: (path: string) => void;
   onBatchRename: () => void;
@@ -26,7 +25,7 @@ interface ContextMenuProps {
 
 export function ContextMenu({
   x, y, selectedFiles, paneState, clipboard,
-  onClose, onOpen, onCopy, onCut, onPaste, onDelete, onRename,
+  onClose, onOpen, onCopy, onCut, onPaste, onDelete,
   onNewFile, onProperties, onBatchRename, onRefresh, showToast,
 }: ContextMenuProps) {
   const ref = useRef<HTMLDivElement>(null);

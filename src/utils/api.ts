@@ -1,5 +1,5 @@
 import { invoke } from '@tauri-apps/api/core';
-import type { FileEntry, DirResult, ArchiveEntry, FileInfo, Drive, SearchResult } from '../types';
+import type { DirResult, ArchiveEntry, FileInfo, Drive, SearchResult } from '../types';
 
 export const api = {
   listDirectory: (path: string, showHidden: boolean): Promise<DirResult> =>

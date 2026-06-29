@@ -14,9 +14,8 @@ export function EditorPanel({ filePath, onSave, showToast }: EditorPanelProps) {
   const [original, setOriginal] = useState('');
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
-  const [encoding, setEncoding] = useState('UTF-8');
+  const [encoding] = useState('UTF-8');
   const [lineCount, setLineCount] = useState(0);
-  const [colCount, setColCount] = useState(0);
   const editorRef = useRef<any>(null);
 
   const ext = filePath.split('.').pop()?.toLowerCase() ?? '';

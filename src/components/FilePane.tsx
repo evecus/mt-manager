@@ -26,7 +26,7 @@ interface FilePaneProps {
 }
 
 export function FilePane({
-  pane, side, focused, clipboard,
+  pane, side: _side, focused, clipboard,
   onFocus, onNavigate, onBack, onForward, onRefresh,
   onOpen, onSelect, onViewMode, onSort, onContextMenu,
   onCopy, onCut, onPaste, onDelete, onRename, showToast,

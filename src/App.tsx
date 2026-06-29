@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, useRef } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import './App.css';
 import { api } from './utils/api';
 import { FilePane } from './components/FilePane';
@@ -14,7 +14,7 @@ import { ContextMenu } from './components/ContextMenu';
 import { ToastContainer } from './components/ToastContainer';
 import { useToast } from './hooks/useToast';
 import type { PaneState, ClipboardState, TabState, FileEntry, Drive } from './types';
-import { isTextFile, isImageFile, isArchiveFile, joinPath, basename, formatSize } from './utils/fileUtils';
+import { isTextFile, isImageFile, isArchiveFile, joinPath, basename } from './utils/fileUtils';
 
 const DEFAULT_PANE = (path: string): PaneState => ({
   path,
@@ -41,7 +41,7 @@ export default function App() {
   const [contextMenu, setContextMenu] = useState<{ x: number; y: number; pane: 'left' | 'right' } | null>(null);
   const [showBatchRename, setShowBatchRename] = useState(false);
   const [showNewItem, setShowNewItem] = useState<{ pane: 'left' | 'right' } | null>(null);
-  const [showSearch, setShowSearch] = useState(false);
+  const [_showSearch, setShowSearch] = useState(false); // eslint-disable-line
   const { toasts, show: showToast } = useToast();
 
   // Init
@@ -248,7 +248,6 @@ export default function App() {
 
   const currentPane = focusedPane === 'left' ? leftPane : rightPane;
   const selectedCount = currentPane?.selected.size ?? 0;
-  const selectedFiles = getSelectedFiles();
 
   // Active tab content
   const activeTabData = tabs.find(t => t.id === activeTab);
@@ -493,12 +492,6 @@ export default function App() {
             if (p) paste(p.path);
           }}
           onDelete={deleteFiles}
-          onRename={(src, name) => {
-            const side = contextMenu.pane;
-            api.renameFile(src, name)
-              .then(() => refreshPane(side))
-              .catch(e => showToast('失败: ' + e, 'error'));
-          }}
           onNewFile={() => setShowNewItem({ pane: contextMenu.pane })}
           onProperties={(path) => {
             const name = basename(path);
