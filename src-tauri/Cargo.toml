@@ -35,5 +35,9 @@ glob = "0.3"
 tokio = { version = "1", features = ["full"] }
 dirs-next = "2"
 
+# Pin to avoid a known incompatibility between cookie 0.18.1 and time >=0.3.42
+# (cookie 0.18.1 calls Format::parse with 1 arg, but newer `time` requires 2).
+time = "=0.3.41"
+
 [features]
 custom-protocol = ["tauri/custom-protocol"]
