@@ -26,6 +26,7 @@ jobs:
         uses: swatinem/rust-cache@v2
         with:
           workspaces: './src-tauri -> target'
+          prefix-key: 'v1-rust'
 
       - name: Install frontend dependencies
         run: npm install
@@ -77,6 +78,7 @@ jobs:
         uses: swatinem/rust-cache@v2
         with:
           workspaces: './src-tauri -> target'
+          prefix-key: 'v1-rust'
 
       - name: Install deps
         run: npm ci
